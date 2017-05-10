@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="223px" height="208px" viewBox="0 0 223 208" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>draft</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M0,188 C0,187.578268 0.0130532535,187.159585 0.038777782,186.744332 C0.0131674278,186.143022 0,185.524702 0,184.888889 L0,23.1111111 C0,22.5697459 0.0186864181,22.0327259 0.0554516306,21.5006564 C0.0187022403,21.0052425 0,20.5048053 0,20 C0,8.954305 8.954305,0 20,0 C20.5173018,0 21.0300165,0.0196396495 21.5374391,0.0582139935 C22.085433,0.0196230252 22.6386812,0 23.196526,0 L150.777419,0 C151.339854,0 151.897616,0.0199472631 152.450032,0.0591704043 C152.961543,0.0199643038 153.47844,0 154,0 C165.045695,0 174,8.954305 174,20 C174,20.5663833 173.976457,21.1272678 173.930295,21.6817311 C173.959254,22.1544936 173.973945,22.6310943 173.973945,23.1111111 L173.973945,190.666667 C173.973945,208 183.37134,208 183.37134,208 L17.3973945,208 C17.3973945,208 6.84817584,208 2.17901095,197.087483 C0.785809368,194.360802 0,191.272169 0,188 Z" id="path-1"></path>
+        <path d="M0,4.00154806 C0,1.79155409 1.79537646,0 4.00348663,0 L59.9965134,0 C62.207578,0 64,1.78506302 64,4.00154806 L64,46.9941649 C64,49.2041589 62.4781012,51.9285292 60.5906007,53.0854335 L33.6978655,69.5687773 C32.7601603,70.1435242 31.2405467,70.1439576 30.3021345,69.5687773 L3.40939928,53.0854335 C1.52644005,51.9313127 0,49.2106499 0,46.9941649 L0,4.00154806 Z" id="path-3"></path>
+        <linearGradient x1="57.7050781%" y1="72.5346779%" x2="37.9101562%" y2="32.4776786%" id="linearGradient-5">
+            <stop stop-color="#000000" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#000000" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon" transform="translate(-82.000000, -96.000000)">
+            <g id="draft" transform="translate(82.000000, 96.000000)">
+                <g id="paper">
+                    <path d="M198,158 L210.5,158 C217.403559,158 223,163.590095 223,170.504234 L223,195.495766 C223,202.401664 217.405077,208 210.5,208 L198,208 L198,158 Z" id="Rectangle-16" fill="#0C474F"></path>
+                    <g id="Group-3" transform="translate(24.000000, 0.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <use id="Combined-Shape" fill="#85D85D" xlink:href="#path-1"></use>
+                    </g>
+                    <path d="M178.96704,0.0229689224 C178.646611,0.00771415327 178.324206,-3.55271368e-15 178,-3.55271368e-15 C166.954305,-3.55271368e-15 158,8.954305 158,20 C158,31.045695 166.954305,40 178,40 C178.324206,40 178.646611,39.9922858 178.96704,39.9770311 C172.913557,35.4145016 169,28.1642809 169,20 C169,11.8357191 172.913557,4.58549844 178.96704,0.0229689224 Z" id="Combined-Shape" fill-opacity="0.18" fill="#000000"></path>
+                    <path d="M178,50 L25,50 C11.1928813,50 0,38.8071187 0,25 C0,11.1928813 11.1928813,2.4853189e-15 25,4.13888739e-31 L178,0 C166.954305,0 158,8.954305 158,20 C158,31.045695 166.954305,40 178,40 C180.761424,40 183,42.2385763 183,45 C183,47.7614237 180.761424,50 178,50 Z" id="Combined-Shape" fill="#0C474F"></path>
+                </g>
+                <g id="words" transform="translate(39.000000, 66.000000)" fill="#AAE78D">
+                    <g id="Group-4">
+                        <rect id="Rectangle-5" x="82" y="28" width="62" height="10" rx="5"></rect>
+                        <rect id="Rectangle-5-Copy-5" x="82" y="0" width="62" height="10" rx="5"></rect>
+                        <rect id="Rectangle-5-Copy" x="82" y="56" width="62" height="10" rx="5"></rect>
+                        <rect id="Rectangle-5-Copy-2" x="0" y="84" width="144" height="10" rx="5"></rect>
+                        <rect id="Rectangle-5-Copy-3" x="0" y="112" width="144" height="10" rx="5"></rect>
+                    </g>
+                </g>
+                <g id="shiled" transform="translate(39.000000, 66.000000)">
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <use id="Rectangle-3" fill="#0C474F" xlink:href="#path-3"></use>
+                    <rect id="Rectangle-7" fill="#155A64" mask="url(#mask-4)" x="0" y="0" width="32" height="70"></rect>
+                    <polygon id="1" fill="url(#linearGradient-5)" opacity="0.283118207" mask="url(#mask-4)" points="14 30 32 71 62 54 49 22 31 38 20 28"></polygon>
+                    <g id="checkmark" mask="url(#mask-4)" fill="#FFFFFF">
+                        <g transform="translate(14.000000, 16.000000)">
+                            <rect id="Rectangle-11" transform="translate(9.500000, 18.500000) rotate(-45.000000) translate(-9.500000, -18.500000) " x="6" y="9" width="7" height="19"></rect>
+                            <rect id="Rectangle-11-Copy" transform="translate(22.500000, 14.000000) rotate(-315.000000) translate(-22.500000, -14.000000) " x="19" y="-1" width="7" height="30"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
