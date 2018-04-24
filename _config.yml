@@ -1,1 +1,38 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+title: Android 绿色应用计划
+#email: green-android@oasisfeng.com
+description: >
+  Android 绿色应用计划旨在推动 Android 生态中的应用开发者采取更积极主动的行动保护用户的设备体验（包括设备整体的隐私安全、待机耗电、流畅性等），维护良性的应用生态。
+  绿色应用公约是一份为统一上述行动而拟定的建议规约。
+repository: green-android/green-android.github.io
+baseurl: .
+url: "http://green-android.org" # the base hostname & protocol for your site, e.g. http://example.com
+#twitter_username: oasisfeng
+#github_username:  oasisfeng
+
+# Build settings
+markdown: kramdown
+theme: minima
+#gems:
+#  - jekyll-feed
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - build
+
+# Extra
 google_analytics: UA-98864606-1
