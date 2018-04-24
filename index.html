@@ -17,15 +17,7 @@
   <meta property="wb:webmaster" content="217f5417e8b38592" />
 
   <link href="assets/stylesheets/application.css" rel="stylesheet" type="text/css" />
-  <script>
-  function doSupport() {
-	  $.ajax({ url: 'https://fsl.me/convention_support.php', type: 'POST', data: {}, success: function(response) { $('#clicks').text('（' + response + '人次）'); }});
-  }
-  function loadSupports() {
-	  $.ajax({ url: 'https://fsl.me/convention_counter.php', type: 'POST', success: function(response) { $('#clicks').text('（' + response + '人次）'); }});
-  }
-  </script>
-  <script src="assets/javascript/jquery.min.js" async="true" onload="loadSupports(); $('a').on('click', function(e) { ga('send', 'event', 'link', 'click', $(this).attr('href'));});"></script>
+  <script src="assets/javascript/jquery.min.js" async="true" onload="$('a').on('click', function(e) { ga('send', 'event', 'link', 'click', $(this).attr('href'));});"></script>
 
 </head>
 
@@ -56,7 +48,6 @@
     <h1 class="text-beta">Android 绿色应用公约</h1>
     <p class="text-center mt-4 mb-5 text-gamma lead">遵循公约的应用，后台不费电、手机不卡顿，跟 iPhone 一样省心。</p>
     <p class="text-gray-light text-center mb-3 text-gamma">由 <a href="http://www.coolapk.com/apk/com.oasisfeng.greenify" target="_blank">绿色守护</a> 与 <a href="https://www.ifanr.com/app" target="_blank">AppSo</a> 联合发起</p>
-    <button type="button" class="btn btn-blue mt-3 mb-1" onClick="doSupport(); ga('send','event','button','click','support'); $(this).addClass('disabled'); this.disabled=true;">支持公约<span id="clicks"></span></button>&nbsp;
     <a class="btn btn-blue mt-3 mb-1" href="app-convention.html">阅读公约（开发者）</a>
     <p class="text-center">健康的 Android 生态，需要每一个用户发出的声音！<br/>请转发公约给您最喜爱应用的开发商。</p>
   </div>
