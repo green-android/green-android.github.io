@@ -36,6 +36,8 @@
 
    Android 7 (API 24)：[Project Svelte 得到了一些强化](https://developer.android.google.cn/about/versions/nougat/android-7.0-changes.html#bg-opt)，确保过于频繁的系统事件不再唤醒大量应用的后台，有助于降低一些场景下（如拍照、网络切换）设备出现的间歇性卡顿。
 
+   附：Google 官方的 [Target SDK Version 合规指导](https://developer.android.google.cn/distribute/best-practices/develop/target-sdk)
+
 2. **不在启动应用时强制请求『读取手机状态和身份（READ_PHONE_STATE）』权限。**
 
    原因：IMEI (GSM) / MEID (CDMA) 属于手机及其它具备移动通信功能的设备中不可变更或重置的唯一标识，同时也是手机在蜂窝网络通信中用以唯一识别终端的关键标识信息。IMEI/MEID 不仅使得广告网络在设备的整个生命周期中实现用户的唯一甄别，还可能被用于蜂窝网络中的设备欺骗攻击，因此 IMEI/MEID 泄露是目前用户隐私和手机安全中的一个突出问题。这一权限的表述也具有相当的迷惑性，在 Android 6.0 之后的运行期权限体系中依然未能获得足够清晰的风险披露。由于 Android 系统仅仅将其显示为『读取手机状态和身份』，使得大部分用户在应用请求此项权限时虽然困惑，但仍未意识到授予这个权限背后存在的安全隐患。
