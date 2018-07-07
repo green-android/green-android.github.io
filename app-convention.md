@@ -104,13 +104,26 @@
 
    原因：外部存储通常是用户私人照片、视频的保存位置，涉及用户的敏感隐私。除文件管理类工具，应尽可能避免使用此权限。
 
-   Android 设备现已普遍采用虚拟分区，内部存储和外部存储（External Storage）实际上共享的是相同的物理存储位置和配额，因此不必担心存储空间内部比外部存储更容易耗尽。如果确有需要将应用的数据（或缓存）写入外部存储，则需分应用私有数据和用户个人资料（如图片、文档）两种情形分别应对。
+   Android 设备现已普遍采用虚拟分区，内部存储和外部存储（External Storage）实际上共享的是相同的物理存储位置和配额，因此不必担心存储空间内部比外部存储更容易耗尽。
+   如果确有需要将应用的数据（或缓存）写入外部存储，则需分应用私有数据和用户个人资料（如图片、文档）两种情形分别应对。
 
-   对于**用户个人资料**，典型的场景如用户主动发起的『保存图片』和『打开文档』这两类交互，应首选使用 Android 4.4 以上版本引入的“[存储访问框架（Storage Access Framework）](https://developer.android.google.cn/guide/topics/providers/document-provider.html#client)”，可实现用简单的 API 无缝对接各种本地存储介质（如 TF 卡、USB OTG 外置存储、NAS）及第三方云存储服务，为用户提供非常灵活的存取选择。如果应用需要兼容 4.4 以下的 Android 版本，建议以如下版本限定的方式声明外部存储权限，并在旧版本系统上直接读写外部存储，兼顾 Android 4.4 前后版本的权限约束。
+   对于**用户个人资料**，如果仅仅是为了方便用户导出图片、视频、音频等媒体文件，供其它应用（比如 微信）读取，建议使用 Android 5.0 新增的 API - `Context.getExternalMediaDirs()`。
+   存储在此位置的文件，应用自身无需存储权限即可读写，而其它应用可通过 `MediaStore` 或者直接访问（需存储权限），用户还可以通过文件管理器方便访问。
+   如果应用需要兼容 5.0 以下的 Android 版本，建议以如下版本限定的方式声明外部存储权限，并在旧版本系统上直接读写外部存储。
+
+   `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="20" />`
+
+   如果希望由用户自由决定文件存储的位置，可使用 Android 4.4 以上版本引入的“[存储访问框架（Storage Access Framework）](https://developer.android.google.cn/guide/topics/providers/document-provider.html#client)”，
+   实现用简单的 API 无缝对接各种本地存储介质（如 TF 卡、USB OTG 外置存储、NAS）及第三方云存储服务，为用户提供非常灵活的存取选择。
+   如果应用需要兼容 4.4 以下的 Android 版本，建议以如下版本限定的方式声明外部存储权限，并在旧版本系统上直接读写外部存储，兼顾 Android 4.4 前后版本的权限约束。
 
    `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />`
 
-   对于**应用私有数据**，通常不建议写入外部存储，因为外部存储可被其它应用访问，存在数据安全风险，这意味着通常还需要对涉及用户隐私的数据额外加密保存。如果确有特殊原因需要将数据写入外部存储，[Context.getExternalFilesDir()](https://developer.android.google.cn/reference/android/content/Context.html#getExternalFilesDir(java.lang.String))、[Context.getExternalCacheDir()](https://developer.android.google.cn/reference/android/content/Context.html#getExternalCacheDir()) 等相关 API 所返回的路径 [从Android 4.4开始可供应用直接存取，无需任何权限](https://developer.android.google.cn/reference/android/Manifest.permission.html#WRITE_EXTERNAL_STORAGE)。如果应用仍需兼容 Android 4.3 或更低的系统版本，请使用前述版本限定的方式声明外部存储的读写权限。
+   对于**应用私有数据**，通常不建议写入外部存储，因为外部存储可被其它应用访问，存在数据安全风险，这意味着通常还需要对涉及用户隐私的数据额外加密保存。
+   如果确有特殊原因需要将数据写入外部存储，[Context.getExternalFilesDir()](https://developer.android.google.cn/reference/android/content/Context.html#getExternalFilesDir(java.lang.String))、
+   [Context.getExternalCacheDir()](https://developer.android.google.cn/reference/android/content/Context.html#getExternalCacheDir()) 
+   等相关 API 所返回的路径 [从Android 4.4开始可供应用直接存取，无需任何权限](https://developer.android.google.cn/reference/android/Manifest.permission.html#WRITE_EXTERNAL_STORAGE)。
+   如果应用仍需兼容 Android 4.3 或更低的系统版本，请使用前述版本限定的方式声明外部存储的读写权限。
 
 2. **上架 Google Play 应用市场**
 
