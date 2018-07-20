@@ -48,7 +48,7 @@
 
 打开绿色守护，点击『+』按钮，选择待认证的应用（通常需要展开『其它应用』后才能找到）添加至绿色守护中。在列表中通过 **长按** 选中待认证的应用，然后点击右上方三个小圆点图标展开菜单，选择其中的『Check certification fulfillment』。如果初步通过认证要求，则会提示『All pass』，否则将提示未符合认证的具体原因，或还需要自行确认的关注点。
 
-自验通过后，请在[GitHub issue tracker 提交认证申请](https://github.com/green-android/certification/issues/new?labels=%E8%AE%A4%E8%AF%81%E7%94%B3%E8%AF%B7&title=[%E8%AE%A4%E8%AF%81%E7%94%B3%E8%AF%B7]%20%E8%AF%B7%E5%A1%AB%E5%86%99%E5%BA%94%E7%94%A8%E5%90%8D&body=%E8%AF%B7%E5%A1%AB%E5%86%99%E5%BE%85%E8%AE%A4%E8%AF%81%E7%9A%84%E5%8C%85%E5%90%8D%EF%BC%88%E9%9C%80%E6%8F%90%E5%89%8D%E4%B8%8A%E6%9E%B6Google%20Play%EF%BC%89%EF%BC%8C%E5%85%AC%E7%BA%A6%E4%B8%AD%E5%90%84%E6%9D%A1%E6%AC%BE%EF%BC%88%E5%8C%85%E6%8B%AC%E5%BB%BA%E8%AE%AE%E6%9D%A1%E6%AC%BE%EF%BC%89%E7%9A%84%E6%BB%A1%E8%B6%B3%E6%83%85%E5%86%B5%EF%BC%8C%E8%81%94%E7%B3%BB%E6%96%B9%E5%BC%8F%EF%BC%88%E8%87%B3%E5%B0%91%E5%BA%94%E5%8C%85%E5%90%ABemail%EF%BC%89%E5%8F%8A%E6%8F%90%E4%BA%A4%E6%96%B9%E8%AE%A4%E4%B8%BA%E5%BF%85%E8%A6%81%E7%9A%84%E5%85%B6%E5%AE%83%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E%E3%80%82)
+自验通过后，请在[GitHub issue tracker 提交认证申请](https://github.com/green-android/certification/issues/new?template=----.md&title=[%E8%AE%A4%E8%AF%81%E7%94%B3%E8%AF%B7]%20%E8%AF%B7%E5%A1%AB%E5%86%99%E5%BA%94%E7%94%A8%E5%90%8D)
 
 现阶段认证将以人工审核的形式进行。为降低审核成本，提交认证的应用 **须在单一应用市场至少达到1万的下载量。满足公约中建议条款的应用将获得优先推荐。**
 
