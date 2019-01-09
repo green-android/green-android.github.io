@@ -18,35 +18,15 @@
 
 4. 针对公约中的第4点要求，请通过`dumpsys alarm`和`dumpsys jobscheduler <package name>`完成自查。
 
-5. 针对公约中的第5点要求，如果应用默认条件下并未达成『后台纯净』，认证计划建议但不强求应用在设置中为用户提供开启『后台纯净』模式的选项。最低要求是必须为绿色守护（Greenify）的用户提供开启这一选项的接口。（如果应用默认条件下已达成『后台纯净』，请跳过以下内容）
+5. 针对公约中的第5点要求，非文件管理（含文件清理）类应用必须确保在 Android 5.0 及以上版本中无「读取/写入外部存储」权限声明。（允许以 `<uses-permission ... android:maxSdkVersion="20" />` 方式针对 Android 4.x 版本继续请求上述权限）
 
-   由于绿色守护的休眠机制原本就会屏蔽应用的所有后台行为，加入休眠清单的应用，实际上已经丧失了后台执行的能力（包括推送通知），以及相应可产生的UV。而如果应用确保了后台纯净并符合公约要求，则绿色守护不会建议用户将该应用加入休眠清单，即便用户主动将其加入，也默认不会休眠此应用。应用通过提供这一选项，可与用户之间达成和解，从而赢得用户的信任，换取受控的后台执行能力（如`JobScheduler`）。
-
-   如果已在应用自身的设置内提供『后台纯净』的选项，请为应用内对应的设置界面新增一个`<activity-alias>`，包含响应上述`action`的`<intent-filter>`：
-
-   ```
-   <activity-alias … android:excludeFromRecents="true">
-     <intent-filter>
-       <action android:name="com.oasisfeng.greenify.intent.action.REQUEST_LIMITED_BACKGROUND" />
-       <category android:name="android.intent.category.DEFAULT" />
-     </intent-filter>
-   </activity-alias>
-   ```
-   如果应用不希望在自身的设置界面中提供上述选项，建议仅在通过上述`action`启动设置界面时，显示『后台纯净』的选项（直接打开设置界面时隐藏此选项）。当用户开启后台纯净模式后，后续进入设置界面则始终显示此选项，以便于用户在必要时关闭后台纯净模式。
-
-   绿色守护会在用户将应用加入休眠清单后提示用户该应用提供『后台纯净』选项，通过`startActivityForResult()`启动上述`Activity`。用户确认开启『后台纯净』选项后，应用需要确保完成以下几点：
-
-   * 在界面关闭前通过`setResult()`向绿色守护返回用户的确认结果。（开启为`RESULT_OK`，放弃为`RESULT_CANCEL`）
-   * 通过`PackageManager`禁用前述`Activity` (或`activity-alias`），此禁用状态作为绿色守护后续识别『后台纯净』模式已开启的标识。如果用户此后在应用的设置中关闭了『后台纯净』模式，则须通过`PackageManager`重新启用前述`<activity-alias>`。
-   * 不启动任何将在后台保持持续运行的服务（`Service`），除非应用处于『前台』状态。
-   * 不再初始化会启动后台持续运行服务的三方SDK。
-   * 如果应用没有在设置中为所有用户提供开启『后台纯净』模式的选项，则建议当用户已通过绿色守护开启应用的『后台纯净』模式后，在应用自己的设置界面中提供关闭『后台纯净』模式的选项。
+   如果使用到的第三方 SDK 强制要求声明上述权限，则允许仅在 AndroidManifest.xml 中声明，但不得在运行期请求上述权限。认证申请中需要列出提出此项强制要求的第三方 SDK。
 
 # 提交认证
 
-请首先确认应用中已包含上述『认证要求 5』中注明的响应`REQUEST_LIMITED_BACKGROUND`的`<activity-alias>`（未来版本中将移除此项要求，如果你的应用默认满足后台纯净，请在完成自验后从应用中移除此`<activity-alias>`），然后使用[最新版本(3.4.2以上)的绿色守护](http://www.coolapk.com/apk/com.oasisfeng.greenify)进行自验：
+请首先确认应用已完全符合上述 5 项条款的要求，然后使用 [最新版本(3.4.2以上)的绿色守护](http://www.coolapk.com/apk/com.oasisfeng.greenify) 进行自验：
 
-打开绿色守护，点击『+』按钮，选择待认证的应用（通常需要展开『其它应用』后才能找到）添加至绿色守护中。在列表中通过 **长按** 选中待认证的应用，然后点击右上方三个小圆点图标展开菜单，选择其中的『Check certification fulfillment』。如果初步通过认证要求，则会提示『All pass』，否则将提示未符合认证的具体原因，或还需要自行确认的关注点。
+首先确认设备已开启了「开发者选项」，然后打开绿色守护，点击『+』按钮，选择待认证的应用（通常需要展开『其它应用』后才能找到）添加至绿色守护中。在列表中通过 **长按** 选中待认证的应用，然后点击右上方三个小圆点图标展开菜单，选择其中的『Check certification fulfillment』。如果初步通过认证要求，则会提示『All pass』，否则将提示未符合认证的具体原因，或还需要自行确认的关注点。
 
 自验通过后，请在[GitHub issue tracker 提交认证申请](https://github.com/green-android/certification/issues/new?template=----.md&title=[%E8%AE%A4%E8%AF%81%E7%94%B3%E8%AF%B7]%20%E8%AF%B7%E5%A1%AB%E5%86%99%E5%BA%94%E7%94%A8%E5%90%8D)
 

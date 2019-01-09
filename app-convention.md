@@ -1,4 +1,4 @@
-# Android 绿色应用公约 2.0（2018 年 4 月）
+# Android 绿色应用公约 3.0（2019 年 1 月）
 
 ## 宗旨
 
@@ -28,7 +28,7 @@
 
 ### 必要部分
 
-1. **Target SDK Version 最低：24（从 2019 年开始提升至 26）**
+1. **Target SDK Version 最低：26**
 
    原因：这是发挥 Android 新版本部分机制优化和安全设计的关键开关。当应用的 targetSdkVersion 低于设备当前的 Android 版本时，系统会为应用启用兼容模式，通过关闭新版本的部分机制优化和安全设计以确保应用运行的兼容性，这往往是以牺牲设备体验和安全性为代价的。为了消除应用开发者故意滥用低 target 绕过 Android 机制优化和安全设计，Google 已正式启动 Target SDK Version 的退出政策（最低限制）。从 2018 年 8 月开始针对所有在 Google Play 市场发布的新应用要求最低 26（从 11 月开始针对所有的应用更新），并在未来随着 Android 版本的迭代同步提高。相应的，Android P 也开始对低于 17 的应用在启动时弹出警告。
 
@@ -54,53 +54,11 @@
 
    如果观察到（或怀疑）使用的第三方闭源 SDK 存在上述交叉唤醒行为，建议接入轻量的开源辅助库 [Project Condom](https://github.com/oasisfeng/condom)，以识别和消除这类交叉唤醒。
 
-4. （Target SDK Version >= 28 可豁免）**使用请求唤醒 CPU 的周期性任务（如 Alarm、JobScheduler、Sync Adapter）时，其周期建议不低于 1 小时，最小不低于 30 分钟，并避免在不必要的时间段（如夜间）继续调度周期性事件。间隔低于 12 小时的周期性任务，必须提供可关闭的选项。**
+4. **使用请求唤醒 CPU 的周期性任务（如 Alarm、JobScheduler、Sync Adapter）时，其周期建议不低于 1 小时，最小不低于 30 分钟，并避免在不必要的时间段（如夜间）继续调度周期性事件。间隔低于 12 小时的周期性任务，必须提供可关闭的选项。**
 
    原因：周期性唤醒 CPU 会打断设备的深度睡眠状态，造成设备待机时长的明显缩短。按照 Google 在 Project Volta 中的粗略测算，设备每1秒钟的活跃工作会让待机时间损失大约 2 分钟。大部分应用的后台周期性任务往往以网络访问为主，通常会持续数秒至数十秒（甚至超过 1 分钟）。如果此类周期性后台活动调度过于频繁，对待机时间的影响极其显著。 Android 从 4.4 开始，不断在迭代中优化周期任务的后台调度，但所有这些努力都只能在长周期任务中产生明显的效果。倘若有一个应用请求过于频密的周期任务，则整个系统的待机时长就会因为短木桶效应而受制。
 
-5. （Target SDK Version >= 26 可豁免）**默认达成『后台纯净 (Background-free)』，或为用户提供可达成『后台纯净』目标的选项。**
-
-   原因：后台持续运行的服务，是一系列设备体验问题的温床，如长连接基带持续工作增加的耗电、低内存时服务循环重启引起的设备迟缓、间歇性 CPU 和 IO 资源占用造成的卡顿…… 后台纯净是 Android O 对应用后台约束的一项重大原则性变化，它倡导的是『如非必要，勿启后台』的新原则，鼓励使用系统可优化调度的 Job Scheduler 机制取代长时间运行的后台服务，确保系统对设备整体资源调度和性能优化拥有更强的可控性，避免个别应用对资源的过度占用造成设备全局体验的短木板。
-
-   后台纯净 (Background-free)：指符合 [面向Android O的应用开发要求](https://developer.android.google.cn/preview/features/background.html#services) 中关于后台运行的约束。其核心要求是当应用进入后台，除非仍然有前台服务（Foreground service）正在工作，在短时间内（至多 1 分钟，并在屏幕关闭前）须停止所有后台服务，且在除了收到广播和执行来自通知的 PendingIntent 之外的其它条件（如 JobScheduler）触发的后台行为期间不可以再启动新的后台服务。应用如果使用前台服务，不允许无条件保持前台服务，应提供可避免或关闭前台服务的选项。
-
-   对于存在内容更新、数据同步或弱实时性通知的应用场景，建议在『后台纯净』模式下以周期性轮询替代推送。（参见前述的最低周期约束）
-
-6. （Target SDK Version >= 26 可豁免）**对于 Android 5.0 及以上版本的系统，不在 AndroidManifest.xml 中静态注册以下广播：**
-
-   原因：从 Android 8 开始，以下全部广播均已不再支持静态注册。Android 过去的静态广播注册机制存在触发过于频繁，调度过于集中，难以深度优化等弊端，是造成短时间内系统资源（CPU、内存、IO）压力陡增并引发间歇性卡顿的主要诱因。
-
-   * **android.net.conn.CONNECTIVITY_CHANGE** （Android 7 已不再支持静态注册，替代方案参见 [官方开发文档](https://developer.android.google.cn/about/versions/nougat/android-7.0-changes.html#bg-opt)）
-   * **android.hardware.action.NEW_PICTURE** （同上）
-   * **android.hardware.action.NEW_VIDEO** （同上）
-   * **android.net.wifi.SCAN_RESULTS** （极少使用，建议以 LocationManager 替代）
-   * **android.intent.action.USER_PRESENT** （避免使用）
-   * **android.intent.action.ACTION_POWER_CONNECTED** （建议采用 JobScheduler 替代）
-   * **android.intent.action.ACTION_POWER_DISCONNECTED** （建议采用 JobScheduler 替代）
-   * **android.intent.action.MEDIA_...** （避免使用）
-
-   如需兼容旧版本 Android 系统，可在 AndroidManifest.xml 中声明所需的广播接收器，并使用版本区分的资源常量确保在 Android 5.0 及以上系统中禁用上述静态广播接收器。如下所示：
-
-   AndroidManifest.xml
-   ```
-   <receiver ... android:enabled="@bool/until_api_21">
-   ```
-   /src/main/res/values/flags.xml
-   ```
-   <resources>
-     <bool name="until_api_21">true</bool>
-   </resources>
-   ```
-   /src/main/res/values-v21/flags.xml
-   ```
-   <resources>
-     <bool name="until_api_21">false</bool>
-   </resources>
-   ```
-
-### 建议部分
-
-1. **在 Android 4.4 以上设备中，避免使用『读取/写入外部存储（READ / WRITE_EXTERNAL_STORAGE）』权限。**
+5. **在 Android 5.0 及以上版本的设备中，避免使用『读取/写入外部存储（READ / WRITE_EXTERNAL_STORAGE）』权限。**（豁免：仅限文件管理类应用）
 
    原因：外部存储通常是用户私人照片、视频的保存位置，涉及用户的敏感隐私。除文件管理类工具，应尽可能避免使用此权限。
 
@@ -125,10 +83,12 @@
    等相关 API 所返回的路径 [从Android 4.4开始可供应用直接存取，无需任何权限](https://developer.android.google.cn/reference/android/Manifest.permission.html#WRITE_EXTERNAL_STORAGE)。
    如果应用仍需兼容 Android 4.3 或更低的系统版本，请使用前述版本限定的方式声明外部存储的读写权限。
 
-2. **上架 Google Play 应用市场**
+### 建议部分
+
+1. **上架 Google Play 应用市场**
 
    Google Play 应用市场（以下简称 Google Play）是 Android 生态中全球最大的应用分发渠道，在除中国大陆地区外发售的绝大部分 Android 手机中是预装的唯一应用市场。由于 Google Play 在国内的 Android 应用分发渠道中并未获得主导地位，但这并不妨碍应用开发者应将应用上架 Google Play 的重要性。将应用上架 Google Play 可获得如下优势：
 
-   * **避免“应用唯一标识（App ID）”被恶意抢注，成为未来国际化道路上的“过失性障碍”。** （类似于域名注册的重要性）
+   * **避免“应用唯一标识（App ID）”被恶意抢注，成为未来国际化道路上的“过失性障碍”。** （重要性类似于域名注册）
    * **及早在 Google Play 市场中抢占竞争优势。** 由于因为在 Google Play 上积累口碑和评价远比国内的应用市场严格和困难，在竞争对手尚未觉察到这一点前，投入少量的精力（增加一个分发渠道）即可换取潜在的高回报，避免启动国际化战略之后面临被动局面。
-   * **Google Play 提出的要求、提供的工具和服务，可以让开发团队及早完成与国际标准的对接，降低未来国际化的门槛和阻力。**
+   * **接轨 Google Play 市场的要求、充分利用其提供的工具和服务，可以让开发团队及早完成与国际主流技术的对接，降低未来国际化的门槛和阻力。**
