@@ -32,11 +32,11 @@
 
    原因：这是发挥 Android 新版本部分机制优化和安全设计的关键开关。当应用的 targetSdkVersion 低于设备当前的 Android 版本时，系统会为应用启用兼容模式，通过关闭新版本的部分机制优化和安全设计以确保应用运行的兼容性，这往往是以牺牲设备体验和安全性为代价的。为了消除应用开发者故意滥用低 target 绕过 Android 机制优化和安全设计，Google 已正式启动 Target SDK Version 的退出政策（最低限制）。从 2018 年 8 月开始针对所有在 Google Play 市场发布的新应用要求最低 26（从 11 月开始针对所有的应用更新），并在未来随着 Android 版本的迭代同步提高。相应的，Android P 也开始对低于 17 的应用在启动时弹出警告。
 
-   Android 8 (API 26)：[对应用的后台行为约束进行了大幅度的调整](https://developer.android.google.cn/preview/features/background.html)，取消了应用原本通过静态声明广播接收器所能获得的绝大部分响应系统事件的后台启动能力（俗称『自启动』），并完全限制了应用在后台期间保留其后台服务的能力，从根本上杜绝了后台应用异常消耗系统资源的常见途经，有助于大幅度降低应用后台行为对设备体验的影响。
+   > Android 8 (API 26)：[对应用的后台行为约束进行了大幅度的调整](https://developer.android.google.cn/preview/features/background.html)，取消了应用原本通过静态声明广播接收器所能获得的绝大部分响应系统事件的后台启动能力（俗称『自启动』），并完全限制了应用在后台期间保留其后台服务的能力，从根本上杜绝了后台应用异常消耗系统资源的常见途经，有助于大幅度降低应用后台行为对设备体验的影响。
+   >
+   > Android 7 (API 24)：[Project Svelte 得到了一些强化](https://developer.android.google.cn/about/versions/nougat/android-7.0-changes.html#bg-opt)，确保过于频繁的系统事件不再唤醒大量应用的后台，有助于降低一些场景下（如拍照、网络切换）设备出现的间歇性卡顿。
 
-   Android 7 (API 24)：[Project Svelte 得到了一些强化](https://developer.android.google.cn/about/versions/nougat/android-7.0-changes.html#bg-opt)，确保过于频繁的系统事件不再唤醒大量应用的后台，有助于降低一些场景下（如拍照、网络切换）设备出现的间歇性卡顿。
-
-   附：Google 官方的 [Target SDK Version 合规指导](https://developer.android.google.cn/distribute/best-practices/develop/target-sdk)
+   **附：Android 官方的 [Target SDK Version 合规指导](https://developer.android.google.cn/distribute/best-practices/develop/target-sdk)**
 
 2. **不在启动应用时强制请求『读取手机状态和身份（READ_PHONE_STATE）』权限。**
 
@@ -46,7 +46,7 @@
 
    若应用中的某些功能（如通话相关的特性）依赖此权限，则只能在对应的功能交互中请求此权限。即便用户拒绝授予权限，不依赖此权限的功能仍须保持可用。
 
-   涉及资金或财产安全的应用（如支付类、电子商务类），如果在安全风控中需要用到 IMEI 等永久唯一标识，可在必要时（非应用启动阶段）请求此项权限，但须向用户提供具有法律效力的用户隐私协议，明确包含针对设备永久唯一标识的使用范围和保护责任的说明。
+   **涉及资金或财产安全的应用（如支付类、电子商务类），如果在安全风控中需要用到 IMEI 等永久唯一标识，可在必要时（非应用启动阶段）请求此项权限**，但须向用户提供具有法律效力的用户隐私协议，明确包含针对设备永久唯一标识的使用范围和保护责任的说明。
 
 3. **除用户的主动交互触发外，避免启动其它应用未处于运行中的进程。**
 
@@ -68,13 +68,13 @@
 
    * **用户个人资料**：如果仅仅是为了方便用户导出图片、视频、音频等媒体文件，供其它应用（比如 微信）读取，建议使用 Android 5.0 新增的 API - `Context.getExternalMediaDirs()`。存储在此位置的文件，应用自身无需存储权限即可读写，而其它应用可通过 `MediaStore` 或者直接访问（需存储权限），用户还可以通过文件管理器方便访问。
 
-     > 如果应用需要兼容 Android 4.4 及以下版本，请以版本上限的方式声明外部存储权限，并在旧版本系统上直接读写外部存储。
+     > 如需兼容 Android 4.4 及以下版本，请以版本上限方式声明外部存储权限，并在旧版本系统上直接读写外部存储。
      >
      > `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="20" />`
 
      如果希望由用户自由决定文件存储的位置，可使用 Android 4.4 引入的“[存储访问框架（Storage Access Framework）](https://developer.android.google.cn/guide/topics/providers/document-provider.html#client)”，实现用简单的 API 和通用交互（类似于 Windows 下打开 / 保存文件时使用的标准对话框）无缝对接各种本地存储介质（如 TF 卡、USB OTG 外置存储、NAS）及第三方云存储服务，为用户提供非常灵活的存取选择。
 
-     > 如果应用需要兼容 Android 4.3 及以下版本，请以版本上限的方式声明外部存储权限，并在旧版本系统上直接读写外部存储。
+     > 如需兼容 Android 4.3 及以下版本，请以版本上限方式声明外部存储权限，并在旧版本系统上直接读写外部存储。
      >
      > `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />`
 
@@ -82,7 +82,7 @@
 
    * **应用私有数据**：通常不建议写入外部存储，因为外部存储可被其它应用访问，存在数据安全风险，这意味着通常还需要对涉及用户隐私的数据额外加密保存。如果确有特殊原因需要将数据写入外部存储，[`Context.getExternalFilesDir()`](https://developer.android.google.cn/reference/android/content/Context.html#getExternalFilesDir(java.lang.String))、[Context.getExternalCacheDir()](https://developer.android.google.cn/reference/android/content/Context.html#getExternalCacheDir()) 等相关 API 所返回的路径 [从Android 4.4开始可供应用直接存取，无需任何权限](https://developer.android.google.cn/reference/android/Manifest.permission.html#WRITE_EXTERNAL_STORAGE)。
 
-     > 如果应用需要兼容 Android 4.3 及以下版本，请以版本上限的方式声明外部存储权限，并在旧版本系统上直接读写外部存储。
+     > 如需兼容 Android 4.3 及以下版本，请以版本上限方式声明外部存储权限，并在旧版本系统上直接读写外部存储。
      >
      > `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />`
 
