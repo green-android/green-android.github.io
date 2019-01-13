@@ -58,6 +58,8 @@
 
    原因：周期性唤醒 CPU 会打断设备的深度睡眠状态，造成设备待机时长的明显缩短。按照 Google 在 Project Volta 中的粗略测算，设备每1秒钟的活跃工作会让待机时间损失大约 2 分钟。大部分应用的后台周期性任务往往以网络访问为主，通常会持续数秒至数十秒（甚至超过 1 分钟）。如果此类周期性后台活动调度过于频繁，对待机时间的影响极其显著。 Android 从 4.4 开始，不断在迭代中优化周期任务的后台调度，但所有这些努力都只能在长周期任务中产生明显的效果。倘若有一个应用请求过于频密的周期任务，则整个系统的待机时长就会因为短木桶效应而受制。
 
+   > 从 Android 9.0 开始，App Standby 机制将会[针对非活跃应用限制后台的周期性任务](https://developer.android.google.cn/about/versions/pie/power#buckets)。
+
 5. **在 Android 5.0 及以上版本的设备中，避免使用『读取/写入外部存储（READ / WRITE_EXTERNAL_STORAGE）』权限。**（豁免：仅限文件管理类应用）
 
    原因：外部存储通常是用户私人照片、视频的保存位置，涉及用户的敏感隐私。除文件管理类工具，应尽可能避免使用此权限。
@@ -68,13 +70,13 @@
 
    * **用户个人资料**：如果仅仅是为了方便用户导出图片、视频、音频等媒体文件，供其它应用（比如 微信）读取，建议使用 Android 5.0 新增的 API - `Context.getExternalMediaDirs()`。存储在此位置的文件，应用自身无需存储权限即可读写，而其它应用可通过 `MediaStore` 或者直接访问（需存储权限），用户还可以通过文件管理器方便访问。
 
-     > 如需兼容 Android 4.4 及以下版本，请以版本上限方式声明外部存储权限，并在旧版本系统上直接读写外部存储。
+     > 如需兼容 Android 4.4 及以下版本，请以版本上限方式声明外部存储权限，在旧版本系统上直接读写外部存储。
      >
      > `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="20" />`
 
      如果希望由用户自由决定文件存储的位置，可使用 Android 4.4 引入的“[存储访问框架（Storage Access Framework）](https://developer.android.google.cn/guide/topics/providers/document-provider.html#client)”，实现用简单的 API 和通用交互（类似于 Windows 下打开 / 保存文件时使用的标准对话框）无缝对接各种本地存储介质（如 TF 卡、USB OTG 外置存储、NAS）及第三方云存储服务，为用户提供非常灵活的存取选择。
 
-     > 如需兼容 Android 4.3 及以下版本，请以版本上限方式声明外部存储权限，并在旧版本系统上直接读写外部存储。
+     > 如需兼容 Android 4.3 及以下版本，请以版本上限方式声明外部存储权限，在旧版本系统上直接读写外部存储。
      >
      > `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />`
 
@@ -82,7 +84,7 @@
 
    * **应用私有数据**：通常不建议写入外部存储，因为外部存储可被其它应用访问，存在数据安全风险，这意味着通常还需要对涉及用户隐私的数据额外加密保存。如果确有特殊原因需要将数据写入外部存储，[`Context.getExternalFilesDir()`](https://developer.android.google.cn/reference/android/content/Context.html#getExternalFilesDir(java.lang.String))、[Context.getExternalCacheDir()](https://developer.android.google.cn/reference/android/content/Context.html#getExternalCacheDir()) 等相关 API 所返回的路径 [从Android 4.4开始可供应用直接存取，无需任何权限](https://developer.android.google.cn/reference/android/Manifest.permission.html#WRITE_EXTERNAL_STORAGE)。
 
-     > 如需兼容 Android 4.3 及以下版本，请以版本上限方式声明外部存储权限，并在旧版本系统上直接读写外部存储。
+     > 如需兼容 Android 4.3 及以下版本，请以版本上限方式声明外部存储权限，在旧版本系统上直接读写外部存储。
      >
      > `<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />`
 
