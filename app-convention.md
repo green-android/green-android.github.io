@@ -1,4 +1,4 @@
-# Android 绿色应用公约 3.0（2019 年 1 月）
+# Android 绿色应用公约 4.0（2020 年 1 月）
 
 ## 宗旨
 
@@ -28,13 +28,9 @@
 
 ### 必要部分
 
-1. **Target SDK Version 最低：26**
+1. **Target SDK Version 最低：28**
 
-   原因：这是发挥 Android 新版本部分机制优化和安全设计的关键开关。当应用的 targetSdkVersion 低于设备当前的 Android 版本时，系统会为应用启用兼容模式，通过关闭新版本的部分机制优化和安全设计以确保应用运行的兼容性，这往往是以牺牲设备体验和安全性为代价的。为了消除应用开发者故意滥用低 target 绕过 Android 机制优化和安全设计，Google 已正式启动 Target SDK Version 的退出政策（最低限制）。从 2018 年 8 月开始针对所有在 Google Play 市场发布的新应用要求最低 26（从 11 月开始针对所有的应用更新），并在未来随着 Android 版本的迭代同步提高。相应的，Android P 也开始对低于 17 的应用在启动时弹出警告。
-
-   > Android 8 (API 26)：[对应用的后台行为约束进行了大幅度的调整](https://developer.android.google.cn/preview/features/background.html)，取消了应用原本通过静态声明广播接收器所能获得的绝大部分响应系统事件的后台启动能力（俗称『自启动』），并完全限制了应用在后台期间保留其后台服务的能力，从根本上杜绝了后台应用异常消耗系统资源的常见途经，有助于大幅度降低应用后台行为对设备体验的影响。
-   >
-   > Android 7 (API 24)：[Project Svelte 得到了一些强化](https://developer.android.google.cn/about/versions/nougat/android-7.0-changes.html#bg-opt)，确保过于频繁的系统事件不再唤醒大量应用的后台，有助于降低一些场景下（如拍照、网络切换）设备出现的间歇性卡顿。
+   原因：这是发挥 Android 新版本部分机制优化和安全设计的关键开关。当应用的 targetSdkVersion 低于设备当前的 Android 版本时，系统会为应用启用兼容模式，通过关闭新版本的部分机制优化和安全设计以确保应用运行的兼容性，这往往是以牺牲设备体验和安全性为代价的。为了消除应用开发者故意滥用低 target 绕过 Android 机制优化和安全设计，Google 已正式启动 Target SDK Version 的退出政策（最低限制）。从 2018 年 8 月开始针对所有在 Google Play 市场发布的新应用要求最低 26（从 2018 年 11 月开始针对所有的应用更新），并在未来随着 Android 版本的迭代同步提高（2019 年 11 月已将最低要求提升至 28）。相应的，Android Q 也开始对低于 23 的应用在启动时弹出警告。
 
    **附：Android 官方的 [Target SDK Version 合规指导](https://developer.android.google.cn/distribute/best-practices/develop/target-sdk)**
 
@@ -64,11 +60,11 @@
 
    原因：外部存储通常是用户私人照片、视频的保存位置，涉及用户的敏感隐私。除文件管理类工具，应尽可能避免使用此权限。
 
-   Android 设备现已普遍采用虚拟分区，内部存储和外部存储（External Storage）实际上共享的是相同的物理存储位置和配额，因此不必担心存储空间内部比外部存储更容易耗尽。
+   Android 设备现已普遍采用虚拟分区，内部存储和外部存储（External Storage）实际上共享的是相同的物理存储位置和配额，因此不必担心存储空间内部比外部存储更容易耗尽。Android Q 已引入全新的[「分区存储」(Scoped Storage)](https://developer.android.google.cn/about/versions/10/privacy/changes#scoped-storage) 机制限制应用对应用间共享存储区的访问。
 
    如果确有需要将应用的数据（或缓存）存入外部存储，或读写其它应用写入外部存储的数据，则需分“用户个人资料（如图片、文档）”、“应用私有数据”和“其它应用数据”三种情形分别应对：
 
-   * **用户个人资料**：如果仅仅是为了方便用户导出图片、视频、音频等媒体文件，供其它应用（比如 微信）读取，建议使用 Android 5.0 新增的 API - `Context.getExternalMediaDirs()`。存储在此位置的文件，应用自身无需存储权限即可读写，而其它应用可通过 `MediaStore` 或者直接访问（需存储权限），用户还可以通过文件管理器方便访问。
+   * **用户个人资料**：如果仅仅是为了方便用户导出图片、视频、音频等媒体文件，供其它应用（比如 微信）读取，建议使用 Android 5.0 新增的 API - `Context.getExternalMediaDirs()`。存储在此位置的文件，应用自身无需存储权限即可读写，而其它（尚未 target SDK version 29 的）应用可通过 `MediaStore` 或者直接访问（需存储权限），用户还可以通过文件管理器方便访问。
 
      > 如需兼容 Android 4.4 及以下版本，请以版本上限方式声明外部存储权限，在旧版本系统上直接读写外部存储。
      >
